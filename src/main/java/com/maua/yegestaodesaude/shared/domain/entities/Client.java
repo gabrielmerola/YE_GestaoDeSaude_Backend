@@ -28,12 +28,14 @@ public class Client implements UserDetails {
     private String email;
     private String password;
     private String phone;
+    private String cpf;
 
-    public Client(String name, String email, String password, String phone) {
+    public Client(String name, String email, String password, String phone, String cpf) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.cpf = cpf;
     }
 
     @Override
