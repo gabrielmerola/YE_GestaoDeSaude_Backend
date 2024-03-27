@@ -31,7 +31,12 @@ public class CreateClientUsecase {
         var passwordCrypted = passwordEncoder.encode(clientDto.password());
 
         Client entity = new Client(clientDto.name(), clientDto.email(), passwordCrypted, clientDto.phone(), clientDto.cpf());
-        Client newClient = clientRepository.save(entity);
+
+        if(!entity.validateCPF(clientDto.cpf())){
+            return ResponseEntity.status(HttpStatusCode.valueOf(422)).body("CPF inválido");
+        }
+
+        clientRepository.save(entity);
         
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("Cliente cadastrado com sucesso!");
     }

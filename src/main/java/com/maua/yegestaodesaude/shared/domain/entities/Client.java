@@ -1,6 +1,7 @@
 package com.maua.yegestaodesaude.shared.domain.entities;
 
 import java.util.Collection;
+import java.util.InputMismatchException;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,6 +38,38 @@ public class Client implements UserDetails {
         this.cpf = cpf;
     }
 
+    public boolean validateCPF(String cpf) {
+        cpf = cpf.replaceAll("\\D", "");
+
+        if (cpf.length() != 11) {
+            return false;
+        }
+
+        if (cpf.matches("(\\d)\\1{10}")) {
+            return false;
+        }
+
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            sum += Integer.parseInt(String.valueOf(cpf.charAt(i))) * (10 - i);
+        }
+        int remainder = 11 - (sum % 11);
+        int digit = remainder >= 10 ? 0 : remainder;
+
+        if (digit != Integer.parseInt(String.valueOf(cpf.charAt(9)))) {
+            return false;
+        }
+
+        sum = 0;
+        for (int i = 0; i < 10; i++) {
+            sum += Integer.parseInt(String.valueOf(cpf.charAt(i))) * (11 - i);
+        }
+        remainder = 11 - (sum % 11);
+        digit = remainder >= 10 ? 0 : remainder;
+
+        return true;
+    }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
