@@ -13,14 +13,14 @@ public class AuthClientUsecase {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    
+
     @Autowired
     private AutenticationService autenticationService;
 
     public String execute(AuthDto authDto) {
         var clientAutenticationToken = new UsernamePasswordAuthenticationToken(authDto.email(), authDto.password());
         authenticationManager.authenticate(clientAutenticationToken);
-        
+
         return autenticationService.getToken(authDto);
     }
 }

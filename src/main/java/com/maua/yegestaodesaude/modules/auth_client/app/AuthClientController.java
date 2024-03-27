@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maua.yegestaodesaude.shared.domain.dtos.AuthDto;
+import com.maua.yegestaodesaude.shared.domain.dtos.AuthClientResponseDTO;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -17,14 +18,14 @@ import org.springframework.http.HttpStatus;
 @RequestMapping("/auth")
 @Tag(name = "Client")
 public class AuthClientController {
-    
+
     @Autowired
     private AuthClientUsecase authClientUsecase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public String authClient(@RequestBody AuthDto authdto){
-        var result = this.authClientUsecase.execute(authdto);
-        return result;
+    public AuthClientResponseDTO authClient(@RequestBody AuthDto authdto) {
+        String token = this.authClientUsecase.execute(authdto);
+        return new AuthClientResponseDTO(token);
     }
 }
