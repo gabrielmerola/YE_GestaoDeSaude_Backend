@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.maua.yegestaodesaude.shared.domain.dtos.AuthDto;
 import com.maua.yegestaodesaude.shared.domain.entities.Client;
@@ -62,6 +63,21 @@ public class AutenticationService implements UserDetailsService {
                     .getSubject();
 
         }catch(JWTVerificationException exception){
+            return "";
+        }
+    }
+
+    public String getClientId(String token){
+        try{
+            Algorithm algorithm = Algorithm.HMAC256("YE_GESTAO_KEY");
+
+            return JWT.require(algorithm)
+                    .withIssuer("YE_GESTAO")
+                    .build()
+                    .verify(token)
+                    .getClaim("clientId")
+                    .asString();
+        } catch(JWTDecodeException exception){
             return "";
         }
     }
