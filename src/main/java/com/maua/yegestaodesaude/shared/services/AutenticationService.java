@@ -41,7 +41,9 @@ public class AutenticationService implements UserDetailsService {
 
             return JWT.create()
                 .withIssuer("YE_GESTAO")
-                .withSubject(client.getEmail())
+                .withSubject(client.getId().toString())
+                .withClaim("clientId", client.getId())
+                .withClaim("email", client.getEmail())
                 .withExpiresAt(generateExpiratedDate())
                 .sign(algorithm);
         }catch(JWTCreationException exception){

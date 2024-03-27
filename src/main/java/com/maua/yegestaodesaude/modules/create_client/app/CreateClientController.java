@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,8 @@ public class CreateClientController {
         try{
             var result = this.createClientUsecase.execute(clientDto);
             return result;
-        }catch(Exception exception){
+        } catch (Exception exception) {
+            // Lidar com outras exceções que possam ocorrer durante a criação do cliente
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }

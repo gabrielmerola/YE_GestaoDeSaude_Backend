@@ -19,7 +19,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Client implements UserDetails {
-    
     @Id
     @GeneratedValue
     private Long id;
