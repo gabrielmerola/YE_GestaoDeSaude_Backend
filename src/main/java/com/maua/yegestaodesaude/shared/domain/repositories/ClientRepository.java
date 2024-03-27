@@ -8,4 +8,6 @@ import com.maua.yegestaodesaude.shared.domain.entities.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long>{
     Client findByEmail(String email);
+    Client findByCpf(String cpf);
+    Client findByPhone(String phone);
 }
