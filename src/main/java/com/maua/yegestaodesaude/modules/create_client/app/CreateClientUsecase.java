@@ -33,6 +33,6 @@ public class CreateClientUsecase {
         Client entity = new Client(clientDto.name(), clientDto.email(), passwordCrypted, clientDto.phone(), clientDto.cpf());
         Client newClient = clientRepository.save(entity);
         
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(new ClientDto(newClient.getName(), newClient.getEmail(), newClient.getPassword(), newClient.getPhone(), newClient.getCpf()));
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("Cliente cadastrado com sucesso!");
     }
 }
