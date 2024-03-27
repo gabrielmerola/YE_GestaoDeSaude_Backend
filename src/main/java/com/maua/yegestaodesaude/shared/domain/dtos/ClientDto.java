@@ -1,6 +1,6 @@
 package com.maua.yegestaodesaude.shared.domain.dtos;
 
-public record UsuarioDto(
+public record ClientDto(
         String name,
         String email,
         String password,
