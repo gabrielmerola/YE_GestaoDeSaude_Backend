@@ -4,6 +4,7 @@ public record ClientDto(
         String name,
         String email,
         String password,
-        String phone
+        String phone,
+        String cpf
 ) {
 }
