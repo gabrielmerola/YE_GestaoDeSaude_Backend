@@ -28,6 +28,7 @@ public class CreateClientController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Cliente criado com sucesso"),
         @ApiResponse(responseCode = "409", description = "Cliente já existe na base de dados"),
+        @ApiResponse(responseCode = "422", description = "Validação dos dados do cliente falhou"),
         @ApiResponse(responseCode = "400", description = "Erro ao criar cliente")
     })
     public ResponseEntity<Object> createClient(@RequestBody ClientDto clientDto){
