@@ -1,7 +1,6 @@
 package com.maua.yegestaodesaude.shared.domain.entities;
 
 import java.util.Collection;
-import java.util.InputMismatchException;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +37,7 @@ public class Client implements UserDetails {
         this.cpf = cpf;
     }
 
+    // validate
     public boolean validateCPF(String cpf) {
         cpf = cpf.replaceAll("\\D", "");
 
@@ -70,6 +70,16 @@ public class Client implements UserDetails {
         return true;
     }
     
+    public boolean validateEmail(String email) {
+        return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    public boolean validatePassword(String password){
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
+        return password.matches(regex);
+    }
+    
+    // UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
