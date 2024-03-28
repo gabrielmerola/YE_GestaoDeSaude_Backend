@@ -29,33 +29,47 @@ public class SecurityFIlter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        
+        System.out.println("Filtrando requisição...");
+
         String token = extractHeaderToken(request);
 
-        if(token != null){
-            String email = autenticationService.validateTokenJwt(token);
+        if (token != null) {
+            System.out.println("Token JWT encontrado na requisição: " + token);
+
+            String email = autenticationService.getEmail(token);
+            System.out.println("Email extraído do token JWT: " + email);
+
+            Long clientId = autenticationService.getClientId(token);
+            System.out.println("Id do cliente extraído do token JWT: " + clientId);
+
             Client client = clientRepository.findByEmail(email);
 
-            var autentication = new UsernamePasswordAuthenticationToken(client, null, client.getAuthorities());
+            if (client != null) {
+                System.out.println("Cliente encontrado pelo email: " + email);
 
-            SecurityContextHolder.getContext().setAuthentication(autentication);
+                var autentication = new UsernamePasswordAuthenticationToken(client, null, client.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(autentication);
+                System.out.println("Autenticação do Spring Security configurada com sucesso.");
+            } else {
+                System.out.println("Cliente não encontrado pelo email: " + email);
+            }
         }
 
         filterChain.doFilter(request, response);
-
+        System.out.println("Filtro concluído.");
     }
-    
+
     public String extractHeaderToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
 
-        if(authHeader == null){
+        if (authHeader == null) {
             return null;
         }
 
-        if(!authHeader.split(" ")[0].equals("Bearer")){
+        if (!authHeader.startsWith("Bearer ")) {
             return null;
         }
 
-        return authHeader.split(" ")[1];
+        return authHeader.substring(7);
     }
 }
