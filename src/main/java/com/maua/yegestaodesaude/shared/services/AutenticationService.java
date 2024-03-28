@@ -15,6 +15,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.maua.yegestaodesaude.shared.domain.dtos.AuthDto;
 import com.maua.yegestaodesaude.shared.domain.entities.Client;
 import com.maua.yegestaodesaude.shared.domain.repositories.ClientRepository;
@@ -53,32 +54,46 @@ public class AutenticationService implements UserDetailsService {
     }
 
     public String validateTokenJwt(String token) {
-        try{
+        try {
             Algorithm algorithm = Algorithm.HMAC256("YE_GESTAO_KEY");
-
+    
             return JWT.require(algorithm)
                     .withIssuer("YE_GESTAO")
                     .build()
                     .verify(token)
                     .getSubject();
-
-        }catch(JWTVerificationException exception){
-            return "";
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Error validating JWT token", exception);
         }
     }
+    public String getEmail(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("YE_GESTAO_KEY");
+    
+            DecodedJWT jwt = JWT.require(algorithm)
+                    .withIssuer("YE_GESTAO")
+                    .build()
+                    .verify(token);
+    
+            return jwt.getClaim("email").asString();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Error validating JWT token", exception);
+        }
+    }
+    
 
-    public String getClientId(String token){
+    public Long getClientId(String token){
         try{
             Algorithm algorithm = Algorithm.HMAC256("YE_GESTAO_KEY");
 
-            return JWT.require(algorithm)
+            DecodedJWT jwt = JWT.require(algorithm)
                     .withIssuer("YE_GESTAO")
                     .build()
-                    .verify(token)
-                    .getClaim("clientId")
-                    .asString();
+                    .verify(token);
+
+            return jwt.getClaim("clientId").asLong(); 
         } catch(JWTDecodeException exception){
-            return "";
+            return null;
         }
     }
 
