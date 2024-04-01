@@ -2,6 +2,7 @@ package com.maua.yegestaodesaude.modules.bloodPressure.get_latest_blood_pressure
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class GetLatestBloodPressureController {
     @Autowired
     private AutenticationService authenticationService;
 
-    @RequestMapping("/latest")
+    @GetMapping("/latest")
     public ResponseEntity<Object> getLatestBloodPressure(HttpServletRequest request){
         String token = extractTokenFromRequest(request);
         Long clientId = authenticationService.getClientId(token);
