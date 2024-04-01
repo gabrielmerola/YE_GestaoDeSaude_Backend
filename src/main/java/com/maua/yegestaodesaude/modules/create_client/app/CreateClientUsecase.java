@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.maua.yegestaodesaude.shared.domain.dtos.ClientDto;
 import com.maua.yegestaodesaude.shared.domain.entities.Client;
 import com.maua.yegestaodesaude.shared.domain.repositories.ClientRepository;
-import com.maua.yegestaodesaude.shared.helpers.exceptions.ClientFoundException;
 
 @Service
 public class CreateClientUsecase {
@@ -24,17 +23,17 @@ public class CreateClientUsecase {
 
         Client clientExists = clientRepository.findByEmail(clientDto.email());
         if(clientExists != null){
-            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body(new ClientFoundException("Email ja cadastrado"));
+            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body("Email ja cadastrado");
         }
 
         clientExists = clientRepository.findByCpf(clientDto.cpf());
         if(clientExists != null){
-            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body(new ClientFoundException("CPF ja cadastrado"));
+            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body("CPF ja cadastrado");
         }
 
         clientExists = clientRepository.findByPhone(clientDto.phone());
         if(clientExists != null){
-            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body(new ClientFoundException("Telefone ja cadastrado"));
+            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body("Telefone ja cadastrado");
         }
 
         var passwordCrypted = passwordEncoder.encode(clientDto.password());
