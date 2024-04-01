@@ -30,7 +30,8 @@ public class CreateBloodPressureController {
     @PostMapping
     @Operation(description = "Criar pressão arterial")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Pressão arterial criada com sucesso"),
+        @ApiResponse(responseCode = "201", description = "Pressão arterial criada com sucesso"),
+        @ApiResponse(responseCode = "422", description = "Dados inválidos"),
         @ApiResponse(responseCode = "400", description = "Erro ao criar pressão arterial")
     })
     public ResponseEntity<Object> createBloodPressure(@RequestBody BloodPressureDTO bloodPressureDTO, HttpServletRequest request){
