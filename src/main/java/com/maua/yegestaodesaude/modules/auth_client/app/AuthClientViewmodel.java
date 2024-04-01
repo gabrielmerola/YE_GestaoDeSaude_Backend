@@ -1,10 +1,10 @@
-package com.maua.yegestaodesaude.shared.domain.dtos;
+package com.maua.yegestaodesaude.modules.auth_client.app;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthClientResponseDTO {
+public class AuthClientViewmodel {
     private String token;
 }
