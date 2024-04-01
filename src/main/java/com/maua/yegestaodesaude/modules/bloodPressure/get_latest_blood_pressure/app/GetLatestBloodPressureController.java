@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.modules.bloodPressure.get_latest_blood_pressure;
+package com.maua.yegestaodesaude.modules.bloodPressure.get_latest_blood_pressure.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

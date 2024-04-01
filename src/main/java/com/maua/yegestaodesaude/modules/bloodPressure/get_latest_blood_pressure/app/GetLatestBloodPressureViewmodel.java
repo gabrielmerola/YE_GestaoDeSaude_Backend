@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.modules.bloodPressure.get_latest_blood_pressure;
+package com.maua.yegestaodesaude.modules.bloodPressure.get_latest_blood_pressure.app;
 
 import java.sql.Date;
 
