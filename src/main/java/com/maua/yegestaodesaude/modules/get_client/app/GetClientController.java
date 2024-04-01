@@ -31,15 +31,11 @@ public class GetClientController {
     @GetMapping("/")
     public ResponseEntity<Object> getClient(HttpServletRequest request) {
         try {
-            System.out.println("Entrou no método getClient");
             String token = extractTokenFromRequest(request);
             Long clientId = autenticationService.getClientId(token);
             var client = this.getClientUsecase.execute(clientId);
-            System.out.println("Cliente encontrado: " + client);
             return ResponseEntity.ok().body(client);
         } catch (Exception exception) {
-            System.out.println("Erro ao buscar cliente");
-            System.out.println("Exception: " + exception.getMessage());
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
