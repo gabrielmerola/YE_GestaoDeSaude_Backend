@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.shared.domain.dtos;
+package com.maua.yegestaodesaude.modules.get_client.app;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GetClientResponseDTO {
+public class GetClientViewmodel {
 
     private String phone;
     private String email;
