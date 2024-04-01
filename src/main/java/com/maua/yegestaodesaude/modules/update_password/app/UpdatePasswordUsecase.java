@@ -24,8 +24,9 @@ public class UpdatePasswordUsecase {
             throw new EntityError("email");
         }
 
-        if (client.getPassword().equals(newPassword)) {
-            throw new EntityError("password");
+        String currentPassword = client.getPassword();
+        if (passwordEncoder.matches(newPassword, currentPassword)) {
+            throw new EntityError("newPassword, precisa ser diferente da senha atual,");
         }
 
         var passwordCrypted = passwordEncoder.encode(newPassword);
@@ -33,5 +34,4 @@ public class UpdatePasswordUsecase {
         client.setPassword(passwordCrypted);
         return clientRepository.save(client);
     }
-
 }
