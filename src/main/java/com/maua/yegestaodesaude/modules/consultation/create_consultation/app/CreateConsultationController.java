@@ -82,9 +82,10 @@ public class CreateConsultationController {
             Long clientId = autenticationService.getClientId(token);
 
             // Executar caso de uso para criar consulta
-            this.createConsultationUsecase.execute(consultationDTO, clientId);
+            var result = this.createConsultationUsecase.execute(consultationDTO, clientId);
 
-            return ResponseEntity.status(201).body(new CreateConsultationViewmodel("Consulta criada com sucesso"));
+            return result;
+            // return ResponseEntity.status(201).body(new CreateConsultationViewmodel("Consulta criada com sucesso"));
         } catch (Exception e) {
             System.err.println("Erro ao processar solicitação para criar consulta: " + e.getMessage());
             return ResponseEntity.status(400).body(new CreateConsultationViewmodel("Erro ao processar solicitação para criar consulta."));
