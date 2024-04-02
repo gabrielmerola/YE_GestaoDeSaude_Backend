@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.maua.yegestaodesaude.shared.services.AutenticationService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/glucose")
@@ -18,6 +21,9 @@ public class GetLatestGlucoseController {
     
     @Autowired
     private GetLatestGlucoseUsecase getLatestGlucoseUsecase;
+
+    @Autowired
+    private AutenticationService authenticationService;
 
     @GetMapping("/latest")
     @Operation(summary = "Obter última glicose")
@@ -53,12 +59,23 @@ public class GetLatestGlucoseController {
             }
         )
     })
-    public ResponseEntity<Object> getLatestGucose(){
+    public ResponseEntity<Object> getLatestGucose(HttpServletRequest request){
         try {
-            var result = getLatestGlucoseUsecase.execute();
+            String token = extractTokenFromRequest(request);
+            Long clientId = authenticationService.getClientId(token);
+            var result = getLatestGlucoseUsecase.execute(clientId);
             return result;
         } catch (Exception e) {
             return ResponseEntity.status(400).body("{\"message\": \""+ e.getMessage() +"\"}");
+        }
+    }
+
+    private String extractTokenFromRequest(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        } else {
+            throw new RuntimeException("Token not found in request headers");
         }
     }
 }
