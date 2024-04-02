@@ -1,7 +1,7 @@
 package com.maua.yegestaodesaude.modules.client.update_password.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,7 @@ public class UpdatePasswordController {
     @Autowired
     private UpdatePasswordUsecase updatePasswordUsecase;
 
-    @PostMapping("/update-password")
+    @PutMapping("/password")
     @Operation(description = "Atualizar senha do cliente")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Senha atualizada com sucesso"),
