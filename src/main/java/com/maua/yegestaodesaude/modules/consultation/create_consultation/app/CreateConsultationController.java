@@ -29,10 +29,46 @@ public class CreateConsultationController {
     @PostMapping
     @Operation(summary = "Criar consulta")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Consulta criada com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Erro ao processar solicitação para criar consulta"),
-        @ApiResponse(responseCode = "403", description = "Acesso negado"),
-        @ApiResponse(responseCode = "422", description = "Informações inválidas para criar consulta")
+        @ApiResponse(
+            responseCode = "201", 
+            description = "Consulta criada com sucesso", 
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Erro ao processar solicitação para criar consulta",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "403", 
+            description = "Acesso negado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "422", 
+            description = "Informações inválidas para criar consulta",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                )
+            }
+        )
     })
     public ResponseEntity<Object> createConsultation(@RequestBody ConsultationDTO consultationDTO,
             HttpServletRequest request) {
