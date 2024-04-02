@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.maua.yegestaodesaude.modules.client.update_password.app.UpdatePasswordViewmodel;
 import com.maua.yegestaodesaude.shared.services.AutenticationService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,10 +26,38 @@ public class GetClientController {
     @Autowired
     private AutenticationService autenticationService;
 
-    @Operation(description = "Buscar um cliente pelo id")
+    @Operation(summary = "Buscar um cliente pelo id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Cliente encontrado"),
-            @ApiResponse(responseCode = "400", description = "Cliente não encontrado")
+            @ApiResponse(
+                responseCode = "200",
+                description = "Cliente encontrado",
+                content = {
+                    @io.swagger.v3.oas.annotations.media.Content(
+                        mediaType = "application/json",
+                        schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = GetClientViewmodel.class)
+                    )
+                }
+            ),
+            @ApiResponse(
+                responseCode = "204",
+                description = "Cliente não encontrado",
+                content = {
+                    @io.swagger.v3.oas.annotations.media.Content(
+                        mediaType = "application/json",
+                        schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Cliente não encontrado\"\n}")
+                    )
+                }
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description = "Erro ao buscar cliente",
+                content = {
+                    @io.swagger.v3.oas.annotations.media.Content(
+                        mediaType = "application/json",
+                        schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Erro ao buscar cliente\"\n}")
+                    )
+                }
+            )
     })
     @GetMapping
     public ResponseEntity<Object> getClient(HttpServletRequest request) {
@@ -36,9 +65,10 @@ public class GetClientController {
             String token = extractTokenFromRequest(request);
             Long clientId = autenticationService.getClientId(token);
             var client = this.getClientUsecase.execute(clientId);
-            return ResponseEntity.ok().body(client);
+            return ResponseEntity.status(200).body(client);
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body(exception.getMessage());
+            String errorMessage = exception.getMessage();
+            return ResponseEntity.status(400).body("{\"message\": \"" + errorMessage + "\"}");
         }
     }
     
