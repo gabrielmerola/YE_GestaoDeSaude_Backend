@@ -23,13 +23,10 @@ public class CreateConsultationUsecase {
 
     public ResponseEntity<Object> execute(ConsultationDTO consultationDTO, Long clientId) {
         try {
-            System.out.println("Iniciando execução do caso de uso para criar consulta.");
-
             // Verifica se o cliente existe
             Client client = this.clientRepository.findById(clientId).orElseThrow(() -> {
                 throw new RuntimeException("Cliente não encontrado!");
             });
-            System.out.println("Cliente encontrado: " + client.getName());
 
             // Converte as datas do DTO para o formato SQL Date
             Date sqlDate = new Date(convertStringToDate(consultationDTO.date()).getTime());
@@ -46,13 +43,12 @@ public class CreateConsultationUsecase {
 
             // Salva a consulta no repositório
             consultation = consultationRepository.save(consultation);
-            System.out.println("Consulta salva com sucesso no repositório.");
 
             // Retorna a resposta
-            return ResponseEntity.ok(consultation);
+            return ResponseEntity.status(201).body(new CreateConsultationViewmodel("Consulta criada com sucesso"));
         } catch (ParseException e) {
             System.err.println("Erro ao converter data: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Erro ao converter data.");
+            return ResponseEntity.status(422).body("Erro ao converter data.");
         } catch (Exception e) {
             System.err.println("Erro ao executar caso de uso para criar consulta: " + e.getMessage());
             return ResponseEntity.badRequest().body("Erro ao criar consulta.");
