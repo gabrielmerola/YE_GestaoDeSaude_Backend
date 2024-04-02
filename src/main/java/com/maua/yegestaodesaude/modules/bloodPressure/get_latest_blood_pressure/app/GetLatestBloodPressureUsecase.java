@@ -12,8 +12,10 @@ public class GetLatestBloodPressureUsecase {
 
     public ResponseEntity<Object> execute(Long clientId){
         var result = findLastItemInserted(clientId);
-
-        return ResponseEntity.ok().body(result);
+        if(result == null){
+            return ResponseEntity.status(204).body("{\"message\": \"Sem conteúdo\"}");
+        }
+        return ResponseEntity.status(200).body(result);
     }
 
     private Object findLastItemInserted(Long clientId){
