@@ -5,7 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,7 @@ public class CreateBloodPressureUsecase {
         Matcher matcher = regexPattern.matcher(bloodPressureDTO.measure());
 
         if(!matcher.matches()){
-            return ResponseEntity.status(HttpStatusCode.valueOf(422)).body("Medida inválida!");
+            return ResponseEntity.status(422).body(new CreateBloodPressureViewmodel("Medida inválida!"));
         }
         bloodPressure.setMeasure(bloodPressureDTO.measure());
         String level = bloodPressure.levelPressure(bloodPressureDTO.measure());
@@ -50,8 +49,8 @@ public class CreateBloodPressureUsecase {
         this.bloodPressureRepository.save(bloodPressure);
 
         if(bloodPressure.getId() == null){
-            throw new RuntimeException("Erro ao salvar pressão arterial!");
+            return ResponseEntity.status(400).body(new CreateBloodPressureViewmodel("Erro ao salvar pressão arterial!"));
         }
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("Criado com sucesso!");
+        return ResponseEntity.status(201).body(new CreateBloodPressureViewmodel("Criado com sucesso!"));
     }    
 }

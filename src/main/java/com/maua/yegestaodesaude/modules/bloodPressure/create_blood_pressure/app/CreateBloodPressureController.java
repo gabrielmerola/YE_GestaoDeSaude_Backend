@@ -28,11 +28,48 @@ public class CreateBloodPressureController {
     private AutenticationService autenticationService;
 
     @PostMapping
-    @Operation(description = "Criar pressão arterial")
+    @Operation(summary = "Criar pressão arterial")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Pressão arterial criada com sucesso"),
-        @ApiResponse(responseCode = "422", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "400", description = "Erro ao criar pressão arterial")
+        @ApiResponse(
+            responseCode = "201", 
+            description = "Pressão arterial criada com sucesso",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Pressão arterial criada com sucesso\"}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "422", 
+            description = "Dados inválidos",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Dados inválidos\"}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Erro ao criar pressão arterial",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Erro ao criar pressão arterial\"}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Accesso negado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Accesso negado\"}")
+                )
+            }
+        )
     })
     public ResponseEntity<Object> createBloodPressure(@RequestBody BloodPressureDTO bloodPressureDTO, HttpServletRequest request){
         try {
@@ -41,7 +78,7 @@ public class CreateBloodPressureController {
             var result = createBloodPressureUsecase.execute(bloodPressureDTO, clientId);
             return result;
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(e.getMessage());
+            return ResponseEntity.status(400).body(new CreateBloodPressureViewmodel(e.getMessage()));
         }
     }
 
