@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.maua.yegestaodesaude.shared.services.AutenticationService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -23,6 +26,49 @@ public class GetBloodPressureController {
     private AutenticationService autenticationService;
 
     @GetMapping
+    @Operation(summary = "Obter pressão arterial")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Pressão arterial obtida com sucesso",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = GetBloodPressureViewmodel.class)
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "Pressão arterial não encontrada",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Pressão arterial não encontrada\"}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Erro ao obter pressão arterial",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Erro ao obter pressão arterial\"}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "403", 
+            description = "Acesso negado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Acesso negado\"}")
+                )
+            }
+        )
+    })
     public ResponseEntity<Object> getBloodPressure(HttpServletRequest request){
         try {
             String token = extractTokenFromRequest(request);
@@ -31,7 +77,7 @@ public class GetBloodPressureController {
             var result = getBloodPressureUsecase.execute(clientId);
             return result;
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 

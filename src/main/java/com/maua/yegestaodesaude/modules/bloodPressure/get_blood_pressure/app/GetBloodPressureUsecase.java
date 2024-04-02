@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class GetBloodPressureUsecase {
         List<BloodPressure> bloodPressure = bloodPressureRepository.findAllByClientId(clientId);
 
         if(bloodPressure.isEmpty()){
-            return ResponseEntity.status(HttpStatusCode.valueOf(204)).body("Dados não encontrados");
+            return ResponseEntity.status(204).body("{\"message\": \"Não encontrado\"}");
         }
 
         List<GetBloodPressureViewmodel> bloodPressureList = new ArrayList<>();
@@ -35,6 +34,6 @@ public class GetBloodPressureUsecase {
                 .build()
             );
         }
-        return ResponseEntity.ok().body(bloodPressureList);
+        return ResponseEntity.status(200).body(bloodPressureList);
     }
 }
