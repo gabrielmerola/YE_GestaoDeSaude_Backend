@@ -1,7 +1,6 @@
 package com.maua.yegestaodesaude.modules.client.create_client.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,17 +22,17 @@ public class CreateClientUsecase {
 
         Client clientExists = clientRepository.findByEmail(clientDto.email());
         if(clientExists != null){
-            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body("Email ja cadastrado");
+            return ResponseEntity.status(409).body(new CreateClientViewmodel("Email ja cadastrado"));
         }
 
         clientExists = clientRepository.findByCpf(clientDto.cpf());
         if(clientExists != null){
-            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body("CPF ja cadastrado");
+            return ResponseEntity.status(409).body(new CreateClientViewmodel("CPF ja cadastrado"));
         }
 
         clientExists = clientRepository.findByPhone(clientDto.phone());
         if(clientExists != null){
-            return ResponseEntity.status(HttpStatusCode.valueOf(409)).body("Telefone ja cadastrado");
+            return ResponseEntity.status(409).body(new CreateClientViewmodel("Telefone ja cadastrado"));
         }
 
         var passwordCrypted = passwordEncoder.encode(clientDto.password());
@@ -41,23 +40,23 @@ public class CreateClientUsecase {
         Client entity = new Client(clientDto.name(), clientDto.email(), passwordCrypted, clientDto.phone(), clientDto.cpf());
 
         if(!entity.validateCPF(clientDto.cpf())){
-            return ResponseEntity.status(HttpStatusCode.valueOf(422)).body("CPF inválido");
+            return ResponseEntity.status(422).body(new CreateClientViewmodel("CPF inválido"));
         }
         if(!entity.validateEmail(clientDto.email())){
-            return ResponseEntity.status(HttpStatusCode.valueOf(422)).body("Email inválido");
+            return ResponseEntity.status(422).body(new CreateClientViewmodel("Email inválido"));
         }
         if(!entity.validatePassword(clientDto.password())){
-            return ResponseEntity.status(HttpStatusCode.valueOf(422)).body("Senha inválida");
+            return ResponseEntity.status(422).body(new CreateClientViewmodel("Senha inválida"));
         }
         if(clientDto.name() == null || clientDto.name().isEmpty() || clientDto.name().length() < 3){
-            return ResponseEntity.status(HttpStatusCode.valueOf(422)).body("Nome inválido");
+            return ResponseEntity.status(422).body(new CreateClientViewmodel("Nome inválido"));
         }
         if(clientDto.phone() == null || clientDto.phone().isEmpty() || clientDto.phone().length() < 11){
-            return ResponseEntity.status(HttpStatusCode.valueOf(422)).body("Telefone inválido");
+            return ResponseEntity.status(422).body(new CreateClientViewmodel("Telefone inválido"));
         }
 
         clientRepository.save(entity);
         
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("Cliente cadastrado com sucesso!");
+        return ResponseEntity.status(201).body(new CreateClientViewmodel("Cliente cadastrado com sucesso!"));
     }
 }

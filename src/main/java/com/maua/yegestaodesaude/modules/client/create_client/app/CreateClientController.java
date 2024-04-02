@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,12 +23,48 @@ public class CreateClientController {
     private CreateClientUsecase createClientUsecase;
 
     @PostMapping
-    @Operation(description = "Criar um novo Cliente")
+    @Operation(summary = "Criar um novo Cliente")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Cliente criado com sucesso"),
-        @ApiResponse(responseCode = "409", description = "Cliente já existe na base de dados"),
-        @ApiResponse(responseCode = "422", description = "Validação dos dados do cliente falhou"),
-        @ApiResponse(responseCode = "400", description = "Erro ao criar cliente")
+        @ApiResponse(
+            responseCode = "200",
+            description = "Cliente criado com sucesso",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Cliente criado com sucesso\"\n}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "409",
+            description = "Cliente já existe na base de dados",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Cliente já existe na base de dados\"\n}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "422", 
+            description = "Validação dos dados do cliente falhou",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Validação dos dados do cliente falhou\"\n}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Erro ao criar cliente",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Erro ao criar cliente\"\n}")
+                )
+            }
+        )
     })
     public ResponseEntity<Object> createClient(@RequestBody ClientDto clientDto){
         try{
@@ -37,7 +72,7 @@ public class CreateClientController {
             return result;
         } catch (Exception exception) {
             // Lidar com outras exceções que possam ocorrer durante a criação do cliente
-            return ResponseEntity.badRequest().body(exception.getMessage());
+            return ResponseEntity.status(400).body(new CreateClientViewmodel(exception.getMessage()));
         }
     }
 }
