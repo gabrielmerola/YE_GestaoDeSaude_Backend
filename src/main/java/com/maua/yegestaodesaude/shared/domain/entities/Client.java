@@ -41,9 +41,6 @@ public class Client implements UserDetails {
     @Column(nullable = false, unique = true)
     private String cpf;
 
-    @OneToMany
-    private List<BloodPressure> bloodPressure;
-
     public Client(String name, String email, String password, String phone, String cpf) {
         this.name = name;
         this.email = email;
