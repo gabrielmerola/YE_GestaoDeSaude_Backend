@@ -75,16 +75,13 @@ public class CreateConsultationController {
     public ResponseEntity<Object> createConsultation(@RequestBody ConsultationDTO consultationDTO,
             HttpServletRequest request) {
         try {
-            // Extrair token JWT
             String token = extractTokenFromRequest(request);
 
-            // Extrair ID do cliente do token JWT
             Long clientId = autenticationService.getClientId(token);
 
-            // Executar caso de uso para criar consulta
-            this.createConsultationUsecase.execute(consultationDTO, clientId);
+            var result = this.createConsultationUsecase.execute(consultationDTO, clientId);
 
-            return ResponseEntity.status(201).body(new CreateConsultationViewmodel("Consulta criada com sucesso"));
+            return result;
         } catch (Exception e) {
             System.err.println("Erro ao processar solicitação para criar consulta: " + e.getMessage());
             return ResponseEntity.status(400).body(new CreateConsultationViewmodel("Erro ao processar solicitação para criar consulta."));

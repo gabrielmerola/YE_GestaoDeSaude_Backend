@@ -25,11 +25,9 @@ public class Consultation {
     private Client client;
 
     @Column(nullable = false)
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "O campo [name] deve conter apenas letras")
     private String name;
 
     @Column(nullable = false)
-    @Pattern(regexp = "^[a-zA-z]*$", message = "O campo [especialidade] deve conter apenas letras")
     private String expertise;
 
     @Column(nullable = false)
