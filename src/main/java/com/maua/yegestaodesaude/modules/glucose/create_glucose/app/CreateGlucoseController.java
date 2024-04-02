@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maua.yegestaodesaude.modules.consultation.create_consultation.app.CreateConsultationViewmodel;
 import com.maua.yegestaodesaude.shared.domain.dtos.GlucoseDTO;
 import com.maua.yegestaodesaude.shared.services.AutenticationService;
 
