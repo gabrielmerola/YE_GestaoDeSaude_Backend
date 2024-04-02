@@ -22,6 +22,18 @@ public class Glucose {
     private Client client;
 
     private Date date;
-    private String measure;
+    private Integer measure;
     private String level;
+
+    public String levelGlucose(Integer measure) {
+        if(measure < 70){
+            return "baixo";
+        } else if(measure >= 70 && measure < 100){
+            return "normal";
+        } else if(measure >= 100 && measure < 126){
+            return "Atenção";
+        } else {
+            return "Alta";
+        }
+    }
 }
