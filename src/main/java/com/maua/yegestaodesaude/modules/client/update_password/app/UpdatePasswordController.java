@@ -33,7 +33,7 @@ public class UpdatePasswordController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Senha atualizada com sucesso\"}")
                 )
             }    
         ),
@@ -43,7 +43,7 @@ public class UpdatePasswordController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Cliente não encontrado\"}")
                 )
             }  
         ),    
@@ -53,7 +53,7 @@ public class UpdatePasswordController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Parâmetros faltando\"}")
                 )
             }  
         ),    
@@ -63,10 +63,20 @@ public class UpdatePasswordController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Erro ao atualizar senha\"}")
                 )
             }  
-        ),    
+        ),
+        @ApiResponse(
+            responseCode = "403", 
+            description = "Acesso negado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Acesso negado\"}")
+                )
+            }
+        ),
     })
     public ResponseEntity<Object> updatePassword(@RequestBody UpdateClientDTO updateClientDTO) {
         try {

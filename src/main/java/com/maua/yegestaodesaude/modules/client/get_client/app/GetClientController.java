@@ -27,36 +27,46 @@ public class GetClientController {
 
     @Operation(summary = "Buscar um cliente pelo id")
     @ApiResponses(value = {
-            @ApiResponse(
-                responseCode = "200",
-                description = "Cliente encontrado",
-                content = {
-                    @io.swagger.v3.oas.annotations.media.Content(
-                        mediaType = "application/json",
-                        schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = GetClientViewmodel.class)
-                    )
-                }
-            ),
-            @ApiResponse(
-                responseCode = "204",
-                description = "Cliente não encontrado",
-                content = {
-                    @io.swagger.v3.oas.annotations.media.Content(
-                        mediaType = "application/json",
-                        schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Cliente não encontrado\"\n}")
-                    )
-                }
-            ),
-            @ApiResponse(
-                responseCode = "400",
-                description = "Erro ao buscar cliente",
-                content = {
-                    @io.swagger.v3.oas.annotations.media.Content(
-                        mediaType = "application/json",
-                        schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Erro ao buscar cliente\"\n}")
-                    )
-                }
-            )
+        @ApiResponse(
+            responseCode = "200",
+            description = "Cliente encontrado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = GetClientViewmodel.class)
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "Cliente não encontrado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Cliente não encontrado\"\n}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Erro ao buscar cliente",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Erro ao buscar cliente\"\n}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "403", 
+            description = "Acesso negado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Acesso negado\"}")
+                )
+            }
+        )
     })
     @GetMapping
     public ResponseEntity<Object> getClient(HttpServletRequest request) {

@@ -35,7 +35,7 @@ public class CreateConsultationController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Consulta criada com sucesso\"}")
                 )
             }
         ),
@@ -45,7 +45,7 @@ public class CreateConsultationController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Erro ao processar solicitação para criar consulta.\"}")
                 )
             }
         ),
@@ -55,7 +55,7 @@ public class CreateConsultationController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Acesso negado\"}")
                 )
             }
         ),
@@ -65,7 +65,7 @@ public class CreateConsultationController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateConsultationViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Informações inválidas para criar consulta\"}")
                 )
             }
         )

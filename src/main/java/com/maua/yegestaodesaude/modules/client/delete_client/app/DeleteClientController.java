@@ -59,6 +59,16 @@ public class DeleteClientController {
                     schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\n  \"message\": \"Erro ao deletar cliente\"\n}")
                 )
             }
+        ),
+        @ApiResponse(
+            responseCode = "403", 
+            description = "Acesso negado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Acesso negado\"}")
+                )
+            }
         )
     })
     public ResponseEntity<Object> deleteClient(HttpServletRequest request) {

@@ -36,7 +36,7 @@ public class CreateGlucoseController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateGlucoseViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Glicose criada com sucesso\"}")
                 )
             }
         ),
@@ -46,7 +46,17 @@ public class CreateGlucoseController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateGlucoseViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Erro ao criar glicose.\"}")
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "403", 
+            description = "Acesso negado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"Acesso negado\"}")
                 )
             }
         ),
@@ -56,7 +66,7 @@ public class CreateGlucoseController {
             content = {
                 @io.swagger.v3.oas.annotations.media.Content(
                     mediaType = "application/json", 
-                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateGlucoseViewmodel.class)
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(example = "{\"message\": \"informações não fornecidas corretamente\"}")
                 )
             }
         )
