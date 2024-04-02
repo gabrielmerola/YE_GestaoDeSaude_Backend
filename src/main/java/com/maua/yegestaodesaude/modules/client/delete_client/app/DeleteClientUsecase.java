@@ -1,6 +1,7 @@
 package com.maua.yegestaodesaude.modules.client.delete_client.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.maua.yegestaodesaude.shared.domain.entities.Client;
@@ -18,13 +19,16 @@ public class DeleteClientUsecase {
         this.clientRepository = clientRepository;
     }
 
-    public void execute(Long clientId) {
+    public ResponseEntity<Object> execute(Long clientId) {
         Optional<Client> clientOptional = clientRepository.findById(clientId);
         if (clientOptional.isPresent()) {
             Client client = clientOptional.get();
             clientRepository.delete(client);
-        } else {
-            throw new RuntimeException("Cliente não encontrado");
+            return ResponseEntity.ok().body(new DeleteClientViewmodel("Cliente deletado com sucesso"));
+        } else if(clientOptional.isEmpty()) {
+            return ResponseEntity.status(204).body(new DeleteClientViewmodel("Cliente não encontrado"));
+        }else {
+            return ResponseEntity.status(400).body(new DeleteClientViewmodel("Erro ao deletar cliente"));
         }
     }
 }

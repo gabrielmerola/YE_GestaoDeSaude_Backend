@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.maua.yegestaodesaude.modules.client.update_password.app.UpdatePasswordViewmodel;
 import com.maua.yegestaodesaude.shared.services.AutenticationService;
 
 import io.swagger.v3.oas.annotations.Operation;
