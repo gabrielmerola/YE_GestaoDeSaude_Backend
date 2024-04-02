@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.maua.yegestaodesaude.modules.consultation.create_consultation.app.CreateConsultationViewmodel;
 import com.maua.yegestaodesaude.shared.domain.dtos.GlucoseDTO;
 import com.maua.yegestaodesaude.shared.services.AutenticationService;
 
@@ -28,26 +29,53 @@ public class CreateGlucoseController {
     private AutenticationService autenticationService;
 
     @PostMapping
-    @Operation(description = "criar glicose")
+    @Operation(summary = "Criar glicose")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "glicose criada com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Erro ao criar glicose"),
-        @ApiResponse(responseCode = "422", description = "informações não fornecidas corretamente")
+        @ApiResponse(
+            responseCode = "201", 
+            description = "glicose criada com sucesso",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateGlucoseViewmodel.class)
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Erro ao criar glicose",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateGlucoseViewmodel.class)
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "422", 
+            description = "informações não fornecidas corretamente",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = CreateGlucoseViewmodel.class)
+                )
+            }
+        )
     })
     public ResponseEntity<Object> createGlucose(@RequestBody GlucoseDTO glucoseDTO, HttpServletRequest request){
         try {
             String token = extractTokenFromRequest(request);
             Long clientId = autenticationService.getClientId(token);
             if(glucoseDTO.measure() == null || glucoseDTO.date() == null){
-                return ResponseEntity.status(422).body("Medida e data são obrigatórios");
+                return ResponseEntity.status(422).body(new CreateGlucoseViewmodel("Medida e data são obrigatórios"));
             }
             if(glucoseDTO.measure() < 0 && glucoseDTO.measure() > 1000){
-                return ResponseEntity.status(422).body("Medida não pode ser negativa");
+                return ResponseEntity.status(422).body(new CreateGlucoseViewmodel("Medida não pode ser negativa"));
             }
             var result = createGlucoseUsecase.execute(glucoseDTO, clientId);
             return result;
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(e.getMessage());
+            return ResponseEntity.status(400).body(new CreateGlucoseViewmodel(e.getMessage()));
         }
     }
 

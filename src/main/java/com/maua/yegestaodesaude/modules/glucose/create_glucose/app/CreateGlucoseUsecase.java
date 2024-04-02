@@ -43,8 +43,8 @@ public class CreateGlucoseUsecase {
         this.glucoseRepository.save(glucose);
 
         if(glucose.getId() == null){
-            throw new RuntimeException("Erro ao salvar glicose!");
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(new CreateGlucoseViewmodel("Erro ao salvar glicose!"));
         }
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body("glicose criada com sucesso");
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(new CreateGlucoseViewmodel("glicose criada com sucesso"));
     }
 }
