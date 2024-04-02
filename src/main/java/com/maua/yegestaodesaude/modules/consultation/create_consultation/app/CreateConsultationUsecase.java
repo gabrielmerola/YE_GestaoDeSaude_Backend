@@ -1,16 +1,16 @@
 package com.maua.yegestaodesaude.modules.consultation.create_consultation.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import com.maua.yegestaodesaude.shared.domain.dtos.ConsultationDTO;
 import com.maua.yegestaodesaude.shared.domain.entities.Client;
 import com.maua.yegestaodesaude.shared.domain.entities.Consultation;
 import com.maua.yegestaodesaude.shared.domain.repositories.ClientRepository;
 import com.maua.yegestaodesaude.shared.domain.repositories.ConsultationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.text.ParseException;
 
 @Service
 public class CreateConsultationUsecase {
@@ -32,8 +32,8 @@ public class CreateConsultationUsecase {
             System.out.println("Cliente encontrado: " + client.getName());
 
             // Converte as datas do DTO para o formato SQL Date
-            Date sqlDate = Date.valueOf(consultationDTO.date());
-            Date sqlDateReturn = Date.valueOf(consultationDTO.dateReturn());
+            Date sqlDate = new Date(convertStringToDate(consultationDTO.date()).getTime());
+            Date sqlDateReturn = new Date(convertStringToDate(consultationDTO.dateReturn()).getTime());
 
             // Cria uma nova consulta
             Consultation consultation = new Consultation();
@@ -50,10 +50,16 @@ public class CreateConsultationUsecase {
 
             // Retorna a resposta
             return ResponseEntity.ok(consultation);
+        } catch (ParseException e) {
+            System.err.println("Erro ao converter data: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Erro ao converter data.");
         } catch (Exception e) {
             System.err.println("Erro ao executar caso de uso para criar consulta: " + e.getMessage());
-            throw new RuntimeException("Erro ao criar consulta.", e);
+            return ResponseEntity.badRequest().body("Erro ao criar consulta.");
         }
     }
 
+    private java.util.Date convertStringToDate(String dateString) throws ParseException {
+        return java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT).parse(dateString);
+    }
 }
