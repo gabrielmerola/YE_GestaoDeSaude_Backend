@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.ParseException;
 
 @Service
 public class CreateConsultationUsecase {
@@ -29,8 +28,8 @@ public class CreateConsultationUsecase {
             });
 
             // Converte as datas do DTO para o formato SQL Date
-            Date sqlDate = new Date(convertStringToDate(consultationDTO.date()).getTime());
-            Date sqlDateReturn = new Date(convertStringToDate(consultationDTO.dateReturn()).getTime());
+            Date sqlDate = Date.valueOf(consultationDTO.date());
+            Date sqlDateReturn = Date.valueOf(consultationDTO.dateReturn());
 
             // Cria uma nova consulta
             Consultation consultation = new Consultation();
@@ -46,16 +45,8 @@ public class CreateConsultationUsecase {
 
             // Retorna a resposta
             return ResponseEntity.status(201).body(new CreateConsultationViewmodel("Consulta criada com sucesso"));
-        } catch (ParseException e) {
-            System.err.println("Erro ao converter data: " + e.getMessage());
-            return ResponseEntity.status(422).body("Erro ao converter data.");
         } catch (Exception e) {
-            System.err.println("Erro ao executar caso de uso para criar consulta: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Erro ao criar consulta.");
+            return ResponseEntity.badRequest().body(new CreateConsultationViewmodel(e.getMessage()));
         }
-    }
-
-    private java.util.Date convertStringToDate(String dateString) throws ParseException {
-        return java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT).parse(dateString);
     }
 }
