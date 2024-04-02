@@ -11,6 +11,7 @@ import com.maua.yegestaodesaude.shared.services.AutenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -68,6 +69,7 @@ public class GetClientController {
             }
         )
     })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public ResponseEntity<Object> getClient(HttpServletRequest request) {
         try {

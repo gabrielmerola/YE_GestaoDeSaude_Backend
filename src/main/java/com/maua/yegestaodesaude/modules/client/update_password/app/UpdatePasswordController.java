@@ -15,6 +15,7 @@ import com.maua.yegestaodesaude.shared.helpers.errors.WrongTypeParameters;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/client")
@@ -78,6 +79,7 @@ public class UpdatePasswordController {
             }
         ),
     })
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Object> updatePassword(@RequestBody UpdateClientDTO updateClientDTO) {
         try {
             String email = updateClientDTO.getEmail();

@@ -13,6 +13,7 @@ import com.maua.yegestaodesaude.shared.services.AutenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,6 +30,7 @@ public class CreateImcController {
 
     @PostMapping
     @Operation(summary = "Criar IMC")
+    @SecurityRequirement(name = "bearerAuth")
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "201", 
