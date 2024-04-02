@@ -1,6 +1,7 @@
 package com.maua.yegestaodesaude.modules.client.update_password.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +18,21 @@ public class UpdatePasswordUsecase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Client execute(String email, String newPassword) {
+    public ResponseEntity<Object> execute(String email, String newPassword) {
         Client client = clientRepository.findByEmail(email);
 
         if (client == null) {
-            throw new EntityError("email");
+            return ResponseEntity.status(422).body(new EntityError("email"));
         }
 
         String currentPassword = client.getPassword();
         if (passwordEncoder.matches(newPassword, currentPassword)) {
-            throw new EntityError("newPassword, precisa ser diferente da senha atual,");
+            return ResponseEntity.status(422).body(new EntityError("newPassword, precisa ser diferente da senha atual"));
         }
 
         var passwordCrypted = passwordEncoder.encode(newPassword);
 
         client.setPassword(passwordCrypted);
-        return clientRepository.save(client);
+        return ResponseEntity.status(200).body(new UpdatePasswordViewmodel("Senha atualizada com sucesso"));
     }
 }

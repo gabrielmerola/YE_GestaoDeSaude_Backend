@@ -1,6 +1,7 @@
 package com.maua.yegestaodesaude.modules.client.update_password.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,39 +25,75 @@ public class UpdatePasswordController {
     private UpdatePasswordUsecase updatePasswordUsecase;
 
     @PutMapping("/password")
-    @Operation(description = "Atualizar senha do cliente")
+    @Operation(summary = "Atualizar senha do cliente")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Senha atualizada com sucesso"),
-            @ApiResponse(responseCode = "204", description = "Cliente não encontrado"),
-            @ApiResponse(responseCode = "422", description = "Validação dos dados do cliente falhou"),
-            @ApiResponse(responseCode = "400", description = "Erro ao atualizar senha"),
+        @ApiResponse(
+            responseCode = "200",
+            description = "Senha atualizada com sucesso",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                )
+            }    
+        ),
+        @ApiResponse(
+            responseCode = "204",
+            description = "Cliente não encontrado",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                )
+            }  
+        ),    
+        @ApiResponse(
+            responseCode = "422",
+            description = "Validação dos dados do cliente falhou",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                )
+            }  
+        ),    
+        @ApiResponse(
+            responseCode = "400",
+            description = "Erro ao atualizar senha",
+            content = {
+                @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json", 
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = UpdatePasswordViewmodel.class)
+                )
+            }  
+        ),    
     })
-    public UpdatePasswordViewmodel updatePassword(@RequestBody UpdateClientDTO updateClientDTO) {
+    public ResponseEntity<Object> updatePassword(@RequestBody UpdateClientDTO updateClientDTO) {
         try {
             String email = updateClientDTO.getEmail();
             String newPassword = updateClientDTO.getNewPassword();
 
             if (email == null) {
-                throw new MissingParameters("email");
+                return ResponseEntity.status(422).body(new MissingParameters("Email"));
             }
 
             if (!email.getClass().getSimpleName().equals("String")) {
-                throw new WrongTypeParameters("email", "string", email.getClass().getSimpleName());
+                return ResponseEntity.status(422).body(new WrongTypeParameters("email", "string", email.getClass().getSimpleName()));
             }
 
             if (newPassword == null) {
-                throw new MissingParameters("newPassword");
+                return ResponseEntity.status(422).body(new MissingParameters("newPassword"));
             }
 
             if (!newPassword.getClass().getSimpleName().equals("String")) {
-                throw new WrongTypeParameters("newPassword", "string", newPassword.getClass().getSimpleName());
+                return ResponseEntity.status(422).body(new WrongTypeParameters("newPassword", "string", newPassword.getClass().getSimpleName()));
             }
 
             this.updatePasswordUsecase.execute(email, newPassword);
-            return new UpdatePasswordViewmodel("Senha atualizada com sucesso");
+            return ResponseEntity.status(200).body(new UpdatePasswordViewmodel("Senha atualizada com sucesso"));
         } catch (EntityError e) {
             // Captura a exceção EntityError e retorna uma resposta personalizada
-            return new UpdatePasswordViewmodel(e.getMessage());
+            return ResponseEntity.status(400).body(new UpdatePasswordViewmodel(e.getMessage()));
         }
     }
 }
