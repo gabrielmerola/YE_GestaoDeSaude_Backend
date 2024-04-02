@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.modules.update_password.app;
+package com.maua.yegestaodesaude.modules.client.update_password.app;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

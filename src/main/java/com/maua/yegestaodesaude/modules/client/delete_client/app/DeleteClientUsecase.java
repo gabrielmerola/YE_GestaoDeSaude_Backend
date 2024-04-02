@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.modules.delete_client.app;
+package com.maua.yegestaodesaude.modules.client.delete_client.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

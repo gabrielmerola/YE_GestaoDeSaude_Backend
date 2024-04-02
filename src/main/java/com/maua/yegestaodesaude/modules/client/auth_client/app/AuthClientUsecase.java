@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.modules.auth_client.app;
+package com.maua.yegestaodesaude.modules.client.auth_client.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

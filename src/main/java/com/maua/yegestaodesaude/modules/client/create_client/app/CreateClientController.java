@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.modules.create_client.app;
+package com.maua.yegestaodesaude.modules.client.create_client.app;
 
 import com.maua.yegestaodesaude.shared.domain.dtos.ClientDto;
 

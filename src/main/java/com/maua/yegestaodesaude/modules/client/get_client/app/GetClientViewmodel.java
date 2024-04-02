@@ -1,4 +1,4 @@
-package com.maua.yegestaodesaude.modules.get_client.app;
+package com.maua.yegestaodesaude.modules.client.get_client.app;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
