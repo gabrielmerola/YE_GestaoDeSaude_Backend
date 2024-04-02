@@ -11,10 +11,12 @@ import com.maua.yegestaodesaude.shared.services.AutenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/client")
+@Tag(name = "Client")
 public class GetClientController {
 
     @Autowired
@@ -28,7 +30,7 @@ public class GetClientController {
             @ApiResponse(responseCode = "200", description = "Cliente encontrado"),
             @ApiResponse(responseCode = "400", description = "Cliente não encontrado")
     })
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<Object> getClient(HttpServletRequest request) {
         try {
             String token = extractTokenFromRequest(request);

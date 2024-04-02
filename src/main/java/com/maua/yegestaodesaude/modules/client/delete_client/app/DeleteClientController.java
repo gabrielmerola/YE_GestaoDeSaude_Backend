@@ -11,15 +11,12 @@ import com.maua.yegestaodesaude.shared.services.AutenticationService;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/client")
-@ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Cliente deletado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Cliente não encontrado"),
-        @ApiResponse(responseCode = "400", description = "Erro ao deletar cliente")
-})
+@Tag(name = "Client")
 public class DeleteClientController {
 
     @Autowired
@@ -28,7 +25,12 @@ public class DeleteClientController {
     @Autowired
     private AutenticationService authenticationService;
 
-    @DeleteMapping("/")
+    @DeleteMapping
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Cliente deletado com sucesso"),
+        @ApiResponse(responseCode = "404", description = "Cliente não encontrado"),
+        @ApiResponse(responseCode = "400", description = "Erro ao deletar cliente")
+    })
     public ResponseEntity<String> deleteClient(HttpServletRequest request) {
         try {
             String token = extractTokenFromRequest(request);
