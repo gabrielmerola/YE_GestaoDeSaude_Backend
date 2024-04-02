@@ -19,11 +19,11 @@ public class DeleteBloodPressureUsecase {
         Optional<BloodPressure> bloodPressureOptional = bloodPressureRepository.findById(bloodPressureId);
 
         if(!bloodPressureOptional.isPresent()){
-            return ResponseEntity.status(204).body("Registro de pressão arterial não encontrado!");
+            return ResponseEntity.status(204).body(new DeleteBloodPressureViewmodel("Registro de pressão arterial não encontrado!"));
         }
 
         BloodPressure bloodPressure = bloodPressureOptional.get();
         bloodPressureRepository.delete(bloodPressure);
-        return ResponseEntity.status(200).body("Registro de pressão arterial deletado com sucesso!");
+        return ResponseEntity.status(200).body(new DeleteBloodPressureViewmodel("Registro de pressão arterial deletado com sucesso!"));
     }
 }
