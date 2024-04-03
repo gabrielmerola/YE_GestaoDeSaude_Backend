@@ -26,7 +26,7 @@ public class GetImcController {
     @Autowired
     private AutenticationService autenticationService;
 
-        @GetMapping
+        @GetMapping("/imc")
         @Operation(summary = "Obter IMC")
         @SecurityRequirement(name = "bearerAuth")
         @ApiResponses(value = {
