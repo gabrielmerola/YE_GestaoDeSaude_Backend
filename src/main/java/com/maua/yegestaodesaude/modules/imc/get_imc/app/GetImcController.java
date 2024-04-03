@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/imc")
-@Tag(name = "Imc")
+@Tag(name = "IMC")
 public class GetImcController {
 
     @Autowired
