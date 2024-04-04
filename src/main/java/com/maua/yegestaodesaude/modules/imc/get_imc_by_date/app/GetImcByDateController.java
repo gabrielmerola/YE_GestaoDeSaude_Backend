@@ -3,6 +3,7 @@ package com.maua.yegestaodesaude.modules.imc.get_imc_by_date.app;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class GetImcByDateController {
     @Autowired
     private AutenticationService autenticationService;
 
-    @GetMapping
+    @GetMapping("/date/{date}")
     @Operation(summary = "Obter IMC por data")
     @SecurityRequirement(name = "bearerAuth")
     @ApiResponses(value = {
@@ -72,7 +73,7 @@ public class GetImcByDateController {
             }
         )
     })
-    public ResponseEntity<Object> getImcByDate(@RequestParam String date, HttpServletRequest request){
+    public ResponseEntity<Object> getImcByDate(@PathVariable("date") String date, HttpServletRequest request){
         try {
             String token = extractTokenFromRequest(request);
             Long clientId = autenticationService.getClientId(token);
