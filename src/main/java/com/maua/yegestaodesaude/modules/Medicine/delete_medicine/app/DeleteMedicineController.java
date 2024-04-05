@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/medicine")
+@Tag(name = "Medicine")
 public class DeleteMedicineController {
 
     @Autowired
