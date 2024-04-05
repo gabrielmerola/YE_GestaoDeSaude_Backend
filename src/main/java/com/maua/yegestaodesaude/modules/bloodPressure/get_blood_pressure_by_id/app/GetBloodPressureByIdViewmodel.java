@@ -1,5 +1,5 @@
 
-package com.maua.yegestaodesaude.modules.bloodPressure.get_blood_pressure_by_id;
+package com.maua.yegestaodesaude.modules.bloodPressure.get_blood_pressure_by_id.app;
 
 import java.util.Date;
 

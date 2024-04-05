@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/blood-pressure")
-@Tag(name = "BloodPressure")
+@Tag(name = "Blood Pressure")
 public class GetBloodPressureByIdController {
 
     @Autowired
