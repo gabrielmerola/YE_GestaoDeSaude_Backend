@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.maua.yegestaodesaude.modules.bloodPressure.get_blood_pressure_by_id.GetBloodPressureByIdViewmodel;
 import com.maua.yegestaodesaude.shared.domain.entities.BloodPressure;
 import com.maua.yegestaodesaude.shared.domain.repositories.BloodPressureRepository;
 
