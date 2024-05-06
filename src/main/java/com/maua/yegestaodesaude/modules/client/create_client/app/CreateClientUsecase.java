@@ -39,9 +39,9 @@ public class CreateClientUsecase {
 
         Client entity = new Client(clientDto.name(), clientDto.email(), passwordCrypted, clientDto.phone(), clientDto.cpf());
 
-        if(!entity.validateCPF(clientDto.cpf())){
-            return ResponseEntity.status(422).body(new CreateClientViewmodel("CPF inválido"));
-        }
+        // if(!entity.validateCPF(clientDto.cpf())){
+        //     return ResponseEntity.status(422).body(new CreateClientViewmodel("CPF inválido"));
+        // }
         if(!entity.validateEmail(clientDto.email())){
             return ResponseEntity.status(422).body(new CreateClientViewmodel("Email inválido"));
         }
