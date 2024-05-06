@@ -51,7 +51,7 @@ public class CreateClientUsecase {
         if(clientDto.name() == null || clientDto.name().isEmpty() || clientDto.name().length() < 3){
             return ResponseEntity.status(422).body(new CreateClientViewmodel("Nome inválido"));
         }
-        if(clientDto.phone() == null || clientDto.phone().isEmpty() || clientDto.phone().length() < 11){
+        if(clientDto.phone() == null || clientDto.phone().isEmpty()){
             return ResponseEntity.status(422).body(new CreateClientViewmodel("Telefone inválido"));
         }
 
