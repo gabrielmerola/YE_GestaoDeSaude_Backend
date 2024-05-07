@@ -1,8 +1,5 @@
 package com.maua.yegestaodesaude.shared.domain.entities;
 
-import java.util.Date;
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,10 +27,10 @@ public class Consultation {
     private String expertise;
 
     @Column(nullable = false)
-    private Date date;
+    private String date;
 
     @Column(nullable = false)
-    private Date dateReturn;
+    private String dateReturn;
 
     private String description;
 
