@@ -5,8 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.maua.yegestaodesaude.shared.utils.DateUtils;
+
 @Service
 public class GetLatestBloodPressureUsecase {
+
+    @Autowired
+    private DateUtils dateUtils;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -23,7 +29,7 @@ public class GetLatestBloodPressureUsecase {
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             GetLatestBloodPressureViewmodel item = new GetLatestBloodPressureViewmodel(
                 rs.getLong("id"),
-                rs.getDate("date"),
+                dateUtils.RevertDate(rs.getDate("date")),
                 rs.getString("measure"),
                 rs.getString("level")
             );
