@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.maua.yegestaodesaude.shared.domain.entities.Glucose;
 import com.maua.yegestaodesaude.shared.domain.repositories.GlucoseRepository;
+import com.maua.yegestaodesaude.shared.utils.DateUtils;
 
 @Service
 public class GetGlucoseUsecase {
+
+    @Autowired
+    private DateUtils dateUtils;
 
     @Autowired
     private GlucoseRepository glucoseRepository;
@@ -28,7 +32,7 @@ public class GetGlucoseUsecase {
         for (Glucose gc : glucose) {
             glucoseList.add(GetGlucoseViewmodel.builder()
                 .id(gc.getId())
-                .date(gc.getDate())
+                .date(dateUtils.RevertDate(gc.getDate()))
                 .measure(gc.getMeasure())
                 .level(gc.getLevel())
                 .build()

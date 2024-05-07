@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.maua.yegestaodesaude.shared.domain.entities.Glucose;
 import com.maua.yegestaodesaude.shared.domain.repositories.GlucoseRepository;
+import com.maua.yegestaodesaude.shared.utils.DateUtils;
 
 @Service
 public class GetGlucoseByIdUsecase {
+
+    @Autowired
+    private DateUtils dateUtils;
     
     @Autowired
     private GlucoseRepository glucoseRepository;
@@ -22,7 +26,7 @@ public class GetGlucoseByIdUsecase {
             Glucose glucose = glucoseOptional.get();
             GetGlucoseByIdViewmodel viewModel = GetGlucoseByIdViewmodel.builder()
                     .id(glucose.getId())
-                    .date(glucose.getDate())
+                    .date(dateUtils.RevertDate(glucose.getDate()))
                     .measure(glucose.getMeasure())
                     .level(glucose.getLevel())
                     .build();
