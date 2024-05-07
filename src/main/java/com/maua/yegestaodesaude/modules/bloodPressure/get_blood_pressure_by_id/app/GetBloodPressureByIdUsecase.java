@@ -6,9 +6,13 @@ import org.springframework.stereotype.Service;
 
 import com.maua.yegestaodesaude.shared.domain.entities.BloodPressure;
 import com.maua.yegestaodesaude.shared.domain.repositories.BloodPressureRepository;
+import com.maua.yegestaodesaude.shared.utils.DateUtils;
 
 @Service
 public class GetBloodPressureByIdUsecase {
+
+    @Autowired
+    private DateUtils dateUtils;
 
     @Autowired
     private BloodPressureRepository bloodPressureRepository;
@@ -20,7 +24,7 @@ public class GetBloodPressureByIdUsecase {
             // BloodPressure measureLevel = new BloodPressure();
             GetBloodPressureByIdViewmodel viewModel = GetBloodPressureByIdViewmodel.builder()
                     .measure(bloodPressure.getMeasure())
-                    .date(bloodPressure.getDate())
+                    .date(dateUtils.RevertDate(bloodPressure.getDate()))
                     .level(bloodPressure.levelPressure(bloodPressure.getMeasure()))
                     .build();
             return ResponseEntity.status(200).body(viewModel);
