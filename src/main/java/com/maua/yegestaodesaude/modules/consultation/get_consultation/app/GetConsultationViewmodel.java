@@ -1,7 +1,5 @@
 package com.maua.yegestaodesaude.modules.consultation.get_consultation.app;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +11,9 @@ public class GetConsultationViewmodel {
 
     private Long id;
     private String name;
-    private Date date;
+    private String date;
     private String expertise;
-    private Date dateReturn;
+    private String dateReturn;
     private String description;
 
 }
