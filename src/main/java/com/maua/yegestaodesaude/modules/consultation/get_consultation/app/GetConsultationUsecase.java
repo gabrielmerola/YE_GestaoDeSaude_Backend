@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.maua.yegestaodesaude.shared.domain.entities.Consultation;
 import com.maua.yegestaodesaude.shared.domain.repositories.ConsultationRepository;
+import com.maua.yegestaodesaude.shared.utils.DateUtils;
 
 @Service
 public class GetConsultationUsecase {
+
+    @Autowired
+    private DateUtils dateUtils;
 
     @Autowired
     private ConsultationRepository consultationRepository;
@@ -28,10 +32,10 @@ public class GetConsultationUsecase {
         for (Consultation gc : consultation) {
             consultationList.add(GetConsultationViewmodel.builder()
                     .id(gc.getId())
-                    .date(gc.getDate())
+                    .date(dateUtils.RevertDateString(gc.getDate()))
                     .name(gc.getName())
                     .expertise(gc.getExpertise())
-                    .dateReturn(gc.getDateReturn())
+                    .dateReturn(dateUtils.RevertDateString(gc.getDateReturn()))
                     .description(gc.getDescription())
                     .build());
         }
