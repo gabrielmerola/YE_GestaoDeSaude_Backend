@@ -11,7 +11,7 @@ public class GetImcByIdViewmodel {
     private Long id;
     private Double weight;
     private Double height;
-    private Double imc;
+    private String imc;
     private String level;
     private String date;
 }

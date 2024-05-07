@@ -11,4 +11,5 @@ import lombok.Data;
 @Builder
 public class GetDateImcViewmodel {
     private Date date;
+    private String dateFormat;
 }
