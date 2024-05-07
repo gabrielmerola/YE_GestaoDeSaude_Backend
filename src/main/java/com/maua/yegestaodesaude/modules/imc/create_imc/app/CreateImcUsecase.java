@@ -1,6 +1,7 @@
 package com.maua.yegestaodesaude.modules.imc.create_imc.app;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,11 +33,12 @@ public class CreateImcUsecase {
 
         imc.setClient(client);
         imc.setDate(sqlDate);
-        imc.setHeight(imcDTO.height());
+        imc.setHeight(imcDTO.height() / 100);
         imc.setWeight(imcDTO.weight());
 
-        Double imcValue = imcDTO.weight() / (imcDTO.height() * imcDTO.height());
-        imc.setImc(imcValue);
+        Double imcValue = imcDTO.weight() / ((imcDTO.height() / 100) * (imcDTO.height() / 100));
+        DecimalFormat df = new DecimalFormat("#.##");
+        imc.setImc(df.format(imcValue));
 
         String level = imc.ImcLevel(imcValue);
         imc.setLevel(level);

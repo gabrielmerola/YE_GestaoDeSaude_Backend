@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.maua.yegestaodesaude.shared.domain.entities.Imc;
 import com.maua.yegestaodesaude.shared.domain.repositories.ImcRepository;
+import com.maua.yegestaodesaude.shared.utils.DateUtils;
 
 @Service
 public class GetImcUsecase {
+
+    @Autowired
+    private DateUtils dateUtils;
 
     @Autowired
     private ImcRepository imcRepository;
@@ -32,7 +36,7 @@ public class GetImcUsecase {
                     .height(gi.getHeight())
                     .imc(gi.getImc())
                     .level(gi.getLevel())
-                    .date(gi.getDate())
+                    .date(dateUtils.RevertDate(gi.getDate()))
                     .build());
         }
         return ResponseEntity.status(200).body(imcList);

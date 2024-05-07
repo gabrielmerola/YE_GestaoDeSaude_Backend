@@ -5,8 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.maua.yegestaodesaude.shared.utils.DateUtils;
+
 @Service
 public class GetLatestImcUsecase {
+
+    @Autowired
+    private DateUtils dateUtils;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
@@ -25,9 +31,9 @@ public class GetLatestImcUsecase {
                 rs.getLong("id"),
                 rs.getDouble("weight"),
                 rs.getDouble("height"),
-                rs.getDouble("imc"),
+                rs.getString("imc"),
                 rs.getString("level"),
-                rs.getString("date")
+                dateUtils.RevertDateString(rs.getString("date"))
             );
             item.setId(rs.getLong("id"));
             return item;

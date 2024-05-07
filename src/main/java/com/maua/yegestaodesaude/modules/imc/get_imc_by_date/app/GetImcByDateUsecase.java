@@ -22,13 +22,13 @@ public class GetImcByDateUsecase {
     }
 
     private Object findLastItemInserted(Long clientId, Date date){
-        String sql = "SELECT * FROM imc WHERE client_id = " + clientId +" AND date = '" + date + "' LIMIT 1";
+        String sql = "SELECT * FROM imc WHERE client_id = " + clientId +" AND date = '" + date + "'";
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             GetImcByDateViewmodel item = new GetImcByDateViewmodel(
                 rs.getLong("id"),
                 rs.getDouble("weight"),
                 rs.getDouble("height"),
-                rs.getDouble("imc"),
+                rs.getString("imc"),
                 rs.getString("level"),
                 rs.getString("date")
             );
