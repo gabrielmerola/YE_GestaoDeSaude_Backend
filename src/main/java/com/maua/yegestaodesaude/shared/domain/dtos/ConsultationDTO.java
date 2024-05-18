@@ -2,7 +2,7 @@ package com.maua.yegestaodesaude.shared.domain.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record ConsultationDTO (
+public record ConsultationDTO(
         @Schema(example = "Clinico Geral")
         String name,
         @Schema(example = "Clinico Geral")
