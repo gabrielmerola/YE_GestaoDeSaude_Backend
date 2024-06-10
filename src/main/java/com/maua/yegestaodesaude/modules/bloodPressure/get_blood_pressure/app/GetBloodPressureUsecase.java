@@ -38,6 +38,24 @@ public class GetBloodPressureUsecase {
                 .build()
             );
         }
+
+        int n = bloodPressureList.size();
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (bloodPressureList.get(j).getId() > bloodPressureList.get(j + 1).getId()) {
+                    // Trocar os elementos
+                    GetBloodPressureViewmodel temp = bloodPressureList.get(j);
+                    bloodPressureList.set(j, bloodPressureList.get(j + 1));
+                    bloodPressureList.set(j + 1, temp);
+                    swapped = true;
+                }
+            }
+            // Se não houve troca na última passada, a lista está ordenada
+            if (!swapped) break;
+        }
+
         return ResponseEntity.status(200).body(bloodPressureList);
     }
 }
