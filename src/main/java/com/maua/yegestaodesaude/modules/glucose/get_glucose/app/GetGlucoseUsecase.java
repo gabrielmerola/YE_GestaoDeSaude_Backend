@@ -38,6 +38,24 @@ public class GetGlucoseUsecase {
                 .build()
             );
         }
+
+        int n = glucoseList.size();
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (glucoseList.get(j).getId() > glucoseList.get(j + 1).getId()) {
+                    // Trocar os elementos
+                    GetGlucoseViewmodel temp = glucoseList.get(j);
+                    glucoseList.set(j, glucoseList.get(j + 1));
+                    glucoseList.set(j + 1, temp);
+                    swapped = true;
+                }
+            }
+            // Se não houve troca na última passada, a lista está ordenada
+            if (!swapped) break;
+        }
+
         return ResponseEntity.status(200).body(glucoseList);
     }
 }
