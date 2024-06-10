@@ -35,6 +35,21 @@ public class GetMedicineUsecase {
                     .dosage(m.getDosage())
                     .build());
         }
+
+        int n = medicineList.size();
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (medicineList.get(j).getId() > medicineList.get(j + 1).getId()) {
+                    GetMedicineViewmodel temp = medicineList.get(j);
+                    medicineList.set(j, medicineList.get(j + 1));
+                    medicineList.set(j + 1, temp);
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
         return ResponseEntity.status(200).body(medicineList);
     }
 }
