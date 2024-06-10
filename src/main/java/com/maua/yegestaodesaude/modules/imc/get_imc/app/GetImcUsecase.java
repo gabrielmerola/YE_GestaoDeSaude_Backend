@@ -39,6 +39,21 @@ public class GetImcUsecase {
                     .date(dateUtils.RevertDate(gi.getDate()))
                     .build());
         }
+
+        int n = imcList.size();
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (imcList.get(j).getId() > imcList.get(j + 1).getId()) {
+                    GetImcViewmodel temp = imcList.get(j);
+                    imcList.set(j, imcList.get(j + 1));
+                    imcList.set(j + 1, temp);
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
         return ResponseEntity.status(200).body(imcList);
     }
 }
