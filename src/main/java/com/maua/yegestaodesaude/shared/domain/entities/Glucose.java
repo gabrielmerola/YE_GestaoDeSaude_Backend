@@ -27,9 +27,9 @@ public class Glucose {
 
     public String levelGlucose(Integer measure) {
         if(measure < 70){
-            return "baixo";
+            return "Baixo";
         } else if(measure >= 70 && measure < 100){
-            return "normal";
+            return "Normal";
         } else if(measure >= 100 && measure < 126){
             return "Atenção";
         } else {
