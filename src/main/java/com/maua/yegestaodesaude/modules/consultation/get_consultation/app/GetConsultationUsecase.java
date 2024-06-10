@@ -39,6 +39,24 @@ public class GetConsultationUsecase {
                     .description(gc.getDescription())
                     .build());
         }
+
+        int n = consultationList.size();
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (consultationList.get(j).getId() > consultationList.get(j + 1).getId()) {
+                    // Trocar os elementos
+                    GetConsultationViewmodel temp = consultationList.get(j);
+                    consultationList.set(j, consultationList.get(j + 1));
+                    consultationList.set(j + 1, temp);
+                    swapped = true;
+                }
+            }
+            // Se não houve troca na última passada, a lista está ordenada
+            if (!swapped) break;
+        }
+
         return ResponseEntity.status(200).body(consultationList);
     }
 }
