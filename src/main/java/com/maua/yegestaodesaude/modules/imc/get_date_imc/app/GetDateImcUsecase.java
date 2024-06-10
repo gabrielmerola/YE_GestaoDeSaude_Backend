@@ -23,13 +23,14 @@ public class GetDateImcUsecase {
     public ResponseEntity<Object> execute(Long clientId) {
 
         List<Imc> imc = imcRepository.findAllByClientId(clientId);
+        
+        List<GetDateImcViewmodel> imcList = new ArrayList<>();
 
         if (imc.isEmpty()) {
-            return ResponseEntity.status(204).body("{\"message\": \"Não encontrado\"}");
+            return ResponseEntity.status(204).body(imcList);
         }
 
         
-        List<GetDateImcViewmodel> imcList = new ArrayList<>();
 
         for (Imc gi : imc) {
             imcList.add(GetDateImcViewmodel.builder()
